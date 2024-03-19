@@ -13,7 +13,6 @@ return {
 				null_ls.builtins.formatting.cmake_format,
 				null_ls.builtins.formatting.gofmt,
 				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.diagnostics.selene,
 			},
 		})
 
