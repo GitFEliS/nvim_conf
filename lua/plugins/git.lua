@@ -14,7 +14,7 @@ return {
 					diffview = require("diffview"),
 				},
 			})
-		vim.keymap.set("n", "<leader>ng", ":Neogit<Enter>", {})
+		vim.keymap.set("n", "<leader>ng", ":Neogit<Enter>", {desc = "Neogit"})
 		end,
 	},
 	{
@@ -52,10 +52,10 @@ return {
 						return "<Ignore>"
 					end, { expr = true })
 
-					map("n", "<leader>hs", gs.stage_hunk)
-					map("n", "<leader>hr", gs.reset_hunk)
-					map("n", "<leader>hp", gs.preview_hunk)
-					map("n", "<leader>hd", gs.diffthis)
+					map("n", "<leader>hs", gs.stage_hunk, {desc = "stage hunk"})
+					map("n", "<leader>hr", gs.reset_hunk, {desc = "reset hunk"})
+					map("n", "<leader>hp", gs.preview_hunk, {desc = "preview_hunk"})
+					map("n", "<leader>hd", gs.diffthis, {desc = "diffthis"})
 				end,
 
 				current_line_blame = true,
