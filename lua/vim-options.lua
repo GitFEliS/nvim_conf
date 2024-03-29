@@ -6,3 +6,6 @@ vim.g.mapleader = " "
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
+vim.o.updatetime = 250
+vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
+vim.cmd("set scrolloff=14")
