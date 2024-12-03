@@ -20,6 +20,7 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"williamboman/mason-lspconfig.nvim",
+			"Fildo7525/pretty_hover",
 		},
 		config = function()
 			local lsp_conf = require("lspconfig")
@@ -32,7 +33,7 @@ return {
 			})
 			lsp_conf.cmake.setup({
 				cmd = {
-					"cmake-language-server"
+					"cmake-language-server",
 				},
 				filetypes = {
 					"cmake",
@@ -45,9 +46,11 @@ return {
 			lsp_conf.hyprls.setup({})
 			lsp_conf.rust_analyzer.setup({})
 
+			--local pretty_hover = require("pretty_hover")
+
 			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "prev diagnostic" })
 			vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
-			vim.keymap.set("n", "<leader>H", vim.lsp.buf.hover, { desc = "hover" })
+			vim.keymap.set("n", "<leader>H", require("pretty_hover").hover, { desc = "hover" })
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "go to defenition" })
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "go to implementation" })
 			vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, { desc = "type definition" })
