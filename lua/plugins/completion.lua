@@ -1,23 +1,43 @@
 return {
-	{
-		"smolck/command-completion.nvim",
-
-		config = function()
-			require("command-completion").setup()
-		end,
-	},
+	-- {
+	-- 	"smolck/command-completion.nvim",
+	--
+	-- 	config = function()
+	-- 		require("command-completion").setup()
+	-- 	end,
+	-- },
 	{
 		"hrsh7th/cmp-nvim-lsp",
 	},
 	{
+		"hrsh7th/cmp-cmdline",
+	},
+	{
+		"hrsh7th/cmp-nvim-lsp-signature-help",
+	},
+  {
 		"L3MON4D3/LuaSnip",
+  },
+	{
+		"dcampos/nvim-snippy",
+	},
+	{
+		--"L3MON4D3/LuaSnip",
+		"dcampos/cmp-snippy",
+		dependecies = {
+			"dcampos/nvim-snippy",
+		},
 	},
 	{
 		"hrsh7th/nvim-cmp",
 		dependecies = {
+		  "L3MON4D3/LuaSnip",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-cmdline",
 			"saadparwaiz1/cmp_luasnip",
+			"dcampos/cmp-snippy",
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 		},
 		config = function()
 			local cmp = require("cmp")
@@ -27,8 +47,8 @@ return {
 					-- REQUIRED - you must specify a snippet engine
 					expand = function(args)
 						-- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-						require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-						-- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+					  require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+						require("snippy").expand_snippet(args.body) -- For `snippy` users.
 						-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
 					end,
 				},
@@ -45,6 +65,9 @@ return {
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_signature_help" },
+					{ name = "snippy" },
+					{ name = "luasnip" },
 				}, {
 					{ name = "buffer" },
 				}),
