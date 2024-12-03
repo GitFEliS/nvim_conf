@@ -1,4 +1,5 @@
 return {
+  --Ads :Soil command to generate and view puml
 	"javiorfo/nvim-soil",
 
 	-- Optional for puml syntax highlighting:
@@ -8,7 +9,6 @@ return {
 	ft = "plantuml",
 	opts = {
 		-- If you want to change default configurations
-
 		-- This option closes the image viewer and reopen the image generated
 		-- When true this offers some kind of online updating (like plantuml web server)
 		actions = {
