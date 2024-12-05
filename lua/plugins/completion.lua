@@ -15,9 +15,9 @@ return {
 	{
 		"hrsh7th/cmp-nvim-lsp-signature-help",
 	},
-  {
+	{
 		"L3MON4D3/LuaSnip",
-  },
+	},
 	{
 		"dcampos/nvim-snippy",
 	},
@@ -31,7 +31,7 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		dependecies = {
-		  "L3MON4D3/LuaSnip",
+			"L3MON4D3/LuaSnip",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-cmdline",
 			"saadparwaiz1/cmp_luasnip",
@@ -47,7 +47,7 @@ return {
 					-- REQUIRED - you must specify a snippet engine
 					expand = function(args)
 						-- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-					  require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+						require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
 						require("snippy").expand_snippet(args.body) -- For `snippy` users.
 						-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
 					end,
@@ -67,6 +67,7 @@ return {
 					{ name = "nvim_lsp" },
 					{ name = "nvim_lsp_signature_help" },
 					{ name = "snippy" },
+					{ name = "path" },
 					{ name = "luasnip" },
 				}, {
 					{ name = "buffer" },
