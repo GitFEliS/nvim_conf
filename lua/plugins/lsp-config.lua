@@ -12,7 +12,7 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "clangd", "gopls", "hyprls", "cmake" },
+				ensure_installed = { "lua_ls", "clangd", "gopls", "hyprls", "cmake", "terraformls", "tflint" },
 			})
 		end,
 	},
@@ -44,6 +44,8 @@ return {
 			})
 			lsp_conf.gopls.setup({})
 			lsp_conf.hyprls.setup({})
+			lsp_conf.terraformls.setup({})
+      lsp_conf.tflint.setup({})
 			lsp_conf.rust_analyzer.setup({})
 
 			--local pretty_hover = require("pretty_hover")
