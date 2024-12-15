@@ -1,107 +1,98 @@
 return {
-	-- {
-	-- 	"smolck/command-completion.nvim",
-	--
-	-- 	config = function()
-	-- 		require("command-completion").setup()
-	-- 	end,
-	-- },
-	{
-		"hrsh7th/cmp-nvim-lsp",
-	},
-	{
-		"hrsh7th/cmp-cmdline",
-	},
-	{
-		"hrsh7th/cmp-nvim-lsp-signature-help",
-	},
-	{
-		"L3MON4D3/LuaSnip",
-	},
-	{
-		"dcampos/nvim-snippy",
-	},
-	{
-		--"L3MON4D3/LuaSnip",
-		"dcampos/cmp-snippy",
-		dependecies = {
-			"dcampos/nvim-snippy",
-		},
-	},
-	{
-		"hrsh7th/nvim-cmp",
-		dependecies = {
-			"L3MON4D3/LuaSnip",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-cmdline",
-			"saadparwaiz1/cmp_luasnip",
-			"dcampos/cmp-snippy",
-			"dcampos/nvim-snippy",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
-		},
-		config = function()
-			local cmp = require("cmp")
+	"saghen/blink.cmp",
+	lazy = false, -- lazy loading handled internally
 
-			cmp.setup({
-				snippet = {
-					-- REQUIRED - you must specify a snippet engine
-					expand = function(args)
-						-- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-						--require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-						require("snippy").expand_snippet(args.body) -- For `snippy` users.
-						-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-					end,
+	version = "v0.*",
+
+	-- optional: provides snippets for the snippet source
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+	},
+	event = "InsertEnter",
+
+	---@module 'blink.cmp'
+	---@type blink.cmp.Config
+	opts = {
+
+		-- 'default' for mappings similar to built-in completion
+		-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+		-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+		-- see the "default configuration" section below for full documentation on how to define
+		-- your own keymap.
+		keymap = { preset = "enter" },
+
+		appearance = {
+			use_nvim_cmp_as_default = true,
+
+			-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+			-- Adjusts spacing to ensure icons are aligned
+			nerd_font_variant = "mono",
+		},
+
+		completion = {
+			accept = {
+				-- experimental auto-brackets support
+				auto_brackets = {
+					enabled = true,
 				},
+			},
+			menu = {
+				border = "rounded",
+				winblend = 0,
+				scrollbar = true,
+				draw = {
+					treesitter = { "lsp" },
+				},
+			},
+			documentation = {
+				auto_show = true,
+				auto_show_delay_ms = 200,
 				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
+					border = "rounded",
+					winblend = 0,
+
+					scrollbar = true,
 				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					{ name = "nvim_lsp_signature_help" },
-					{ name = "snippy" },
-					{ name = "path" },
-					--{ name = "luasnip" },
-				}, {
-					{ name = "buffer" },
-				}),
-			})
+			},
+			ghost_text = {
+				enabled = vim.g.ai_cmp,
+			},
+		},
 
-			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{ name = "buffer" },
-				},
-			})
+		-- default list of enabled providers defined so that you can extend it
+		-- elsewhere in your config, without redefining it, via `opts_extend`
+		sources = {
+			default = { "lsp", "path", "snippets", "buffer" },
+			cmd = {},
+		},
 
-			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = cmp.config.sources({
-					{ name = "path" },
-				}, {
-					{ name = "cmdline" },
-				}),
-			})
+		-- experimental signature help support
+		signature = {
+			enabled = true,
+			window = {
+				border = "rounded",
+				winblend = 0,
+				scrollbar = true,
+			},
+		},
 
-			-- Set up lspconfig.
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			require("lspconfig").clangd.setup({
-				capabilities = capabilities,
-			})
-			require("lspconfig").gopls.setup({
-				capabilities = capabilities,
-			})
-			require("lspconfig").lua_ls.setup({
-				capabilities = capabilities,
-			})
-		end,
+		fuzzy = {
+			-- when enabled, allows for a number of typos relative to the length of the query
+			-- disabling this matches the behavior of fzf
+			use_typo_resistance = true,
+			-- frencency tracks the most recently/frequently used items and boosts the score of the item
+			use_frecency = true,
+			-- proximity bonus boosts the score of items matching nearby words
+			use_proximity = true,
+			max_items = 200,
+			-- controls which sorts to use and in which order, these three are currently the only allowed options
+			sorts = { "label", "kind", "score" },
+		},
 	},
+	-- allows extending the providers array elsewhere in your config
+	-- without having to redefine it
+	opts_extend = { "sources.default" },
+	config = function(_, opts)
+		require("blink.cmp").setup(opts)
+	end,
 }
