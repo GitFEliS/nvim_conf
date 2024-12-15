@@ -10,8 +10,6 @@ return {
 	},
 	event = "InsertEnter",
 
-	---@module 'blink.cmp'
-	---@type blink.cmp.Config
 	opts = {
 
 		-- 'default' for mappings similar to built-in completion
