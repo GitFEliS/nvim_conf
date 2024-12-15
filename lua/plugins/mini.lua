@@ -63,7 +63,7 @@ return {
 
 			require("mini.notify").setup()
 
-			require("mini.animate").setup()
+			--require("mini.animate").setup()
 
 			require("mini.move").setup()
 		end,
